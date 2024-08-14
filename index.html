@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="container">
+        <img src="assets/Logo.png">
+        <div class="container__contenido">
+            <div class="container__informaciones">
+                <div class="container__texto">
+                    <p class="texto__parrafo"></p>
+                </div>
+                <form id="encryptionForm">
+                    <textarea placeholder="Ingrese el texto aquí" id="mensaje" rows="4" cols="50"></textarea><br>
+                    <span id="error-message" style="color: red; display: none;">Por favor, ingresa solo letras minúsculas y espacios.</span><br><br>
+                    <div class="container__botones">
+                        <button class="boton" type="button" id="encryptButton" disabled>Cifrar</button>
+                        <button class="boton" type="button" id="decryptButton" disabled>Descifrar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="campo__visualizacion">
+                <div id="animacion"> 
+                    <img src="./assets/muneco.svg" alt="dibujo animado con una lupa en la mano derecha" class="animacion" /></div>
+               
+                <div class="mensajeInformativo"><h2>Ningún mensaje fue encontrado </h2>
+                    <p>Ingresa el texto que deseas encriptar o desencriptar</p>
+                    <p>Mensaje encriptado:</p>
+                    <p id="encryptedMessage"></p>
+                
+                    <p>Mensaje desencriptado:</p>
+                    <p id="decryptedMessage"></p>
+                </div>
+            </div>   
+        </div>
+
+        
+    </div>
+
+    <script src="app.js"></script>
+
+    <footer>Desarrollado y mantenido por Cabianca</footer>
+</body>
+
+</html>
