@@ -1,92 +1,133 @@
-document.getElementById('mensaje').addEventListener('input', function() {
-    const message = document.getElementById('mensaje').value.trim();
 
-    // Habilitar o deshabilitar los botones en función de si hay texto en el textarea
-    const buttonsEnabled = message.length > 0;
-    document.getElementById('encryptButton').disabled = !buttonsEnabled;
-    document.getElementById('decryptButton').disabled = !buttonsEnabled;
-
-});
+// Validación del mensaje de entada
+function validarMensaje(message) {
+    const isValid = /^[a-z\s]+$/.test(message);
+    if (!isValid) {
+        document.getElementById('error-message').style.display = 'inline';
+        return false;
+    } else {
+        document.getElementById('error-message').style.display = 'none';
+        return true;
+    }
+}
 
 document.getElementById('encryptButton').addEventListener('click', function() {
     const message = document.getElementById('mensaje').value.trim();
-    const isValid = /^[a-z\s]+$/.test(message);
-
-    if (!isValid) {
-        // Mostrar un mensaje de error si la validación falla
-        document.getElementById('error-message').style.display = 'inline';
+    
+    if (!validarMensaje(message)) {
         return;
-    } else {
-        // Ocultar el mensaje de error si la validación es correcta
-        document.getElementById('error-message').style.display = 'none';
     }
 
     // Encriptar el mensaje
     const encryptedMessage = encryptMessage(message);
 
+    // Ocultar la imagen
+    const mensajeInformativo = document.getElementById('mensajeInformativo');
+    mensajeInformativo.classList.add('hidden');
+
     // Mostrar el mensaje encriptado
+    const mensajeResultado = document.getElementById('mensajeResultado');
+    mensajeResultado.classList.remove('hidden');
     document.getElementById('encryptedMessage').textContent = encryptedMessage;
+
+    // Mostrar el botón de copiado
+    const boton = document.getElementById('copyButton');
+    boton.classList.remove('hidden');
 });
 
 document.getElementById('decryptButton').addEventListener('click', function() {
-    const encryptedMessage = document.getElementById('encryptedMessage').textContent.trim();
+    const message = document.getElementById('mensaje').value.trim();
+    
+    if (!validarMensaje(message)) {
+        return;
+    }
 
-    if (encryptedMessage) {
-        // Desencriptar el mensaje
-        const decryptedMessage = decryptMessage(encryptedMessage);
+    // Desencriptar el mensaje
+    const decryptedMessage = decryptMessage(message);
 
-        // Mostrar el mensaje desencriptado
-        document.getElementById('decryptedMessage').textContent = decryptedMessage;
+    // Ocultar la imagen
+    const mensajeInformativo = document.getElementById('mensajeInformativo');
+    mensajeInformativo.classList.add('hidden');
+
+    // Mostrar el mensaje desencriptado
+    const mensajeResultado = document.getElementById('mensajeResultado');
+    mensajeResultado.classList.remove('hidden');
+    document.getElementById('encryptedMessage').textContent = decryptedMessage;
+
+    // Mostrar el botón de copiado
+    const boton = document.getElementById('copyButton');
+    boton.classList.remove('hidden');
+});
+
+document.getElementById('copyButton').addEventListener('click', function() {
+    // Obtener el mensaje encriptado o desencriptado visible
+    const mensajeEncriptado = document.getElementById('encryptedMessage').textContent;
+    const mensajeDesencriptado = document.getElementById('decryptedMessage')?.textContent || '';
+    
+    // Determinar cuál de los mensajes es el visible
+    const mensajeParaCopiar = mensajeEncriptado || mensajeDesencriptado;
+    
+    if (mensajeParaCopiar) {
+        // Usar el Clipboard API para copiar el texto
+        navigator.clipboard.writeText(mensajeParaCopiar)
+            .then(() => {
+                // Mostrar notificación de "Texto copiado"
+                const notification = document.getElementById('notification');
+                notification.classList.remove('hidden');
+                notification.classList.add('show');
+
+                // Ocultar la notificación después de 2 segundos
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    notification.classList.add('hidden');
+                }, 2000);
+            })
+            .catch(err => {
+                console.error('Error al copiar el texto: ', err);
+            });
+    } else {
+        console.error('No hay ningún mensaje para copiar');
     }
 });
 
-// Algoritmo de encriptación (Cifrado César con desplazamiento de 3 posiciones)
+
+
+
+// Algoritmo de encriptación
 function encryptMessage(message) {
-    const shift = 3;
     let encrypted = '';
 
     for (let i = 0; i < message.length; i++) {
         let char = message[i];
 
-        if (char === ' ') {
-            encrypted += ' ';
-            continue;
+        // Aplicar las reglas de encriptación
+        if (char === 'e') {
+            encrypted += 'enter';
+        } else if (char === 'i') {
+            encrypted += 'imes';
+        } else if (char === 'a') {
+            encrypted += 'ai';
+        } else if (char === 'o') {
+            encrypted += 'ober';
+        } else if (char === 'u') {
+            encrypted += 'ufat';
+        } else {
+            encrypted += char;
         }
-
-        let code = message.charCodeAt(i);
-
-        // Encriptar solo caracteres en minúscula
-        if (code >= 97 && code <= 122) { // Minúsculas
-            char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
-        }
-
-        encrypted += char;
     }
 
     return encrypted;
 }
-// Algoritmo de desencriptación (Revertir el cifrado César)
+// Algoritmo de desencriptación
 function decryptMessage(message) {
-    const shift = 3;
-    let decrypted = '';
+    let decrypted = message;
 
-    for (let i = 0; i < message.length; i++) {
-        let char = message[i];
-
-        if (char === ' ') {
-            decrypted += ' ';
-            continue;
-        }
-
-        let code = message.charCodeAt(i);
-
-        // Desencriptar solo caracteres en minúscula
-        if (code >= 97 && code <= 122) { // Minúsculas
-            char = String.fromCharCode(((code - 97 - shift + 26) % 26) + 97);
-        }
-
-        decrypted += char;
-    }
+    // Aplicar las reglas de desencriptación en orden inverso
+    decrypted = decrypted.replace(/enter/g, 'e');
+    decrypted = decrypted.replace(/imes/g, 'i');
+    decrypted = decrypted.replace(/ai/g, 'a');
+    decrypted = decrypted.replace(/ober/g, 'o');
+    decrypted = decrypted.replace(/ufat/g, 'u');
 
     return decrypted;
 }
