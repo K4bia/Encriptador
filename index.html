@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encriptador</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <img src="./assets/Vector.svg" alt="logo de 
@@ -14,46 +16,45 @@
 
 
     <main class="container">
+        <section class="container__informaciones">
 
-        <!-- <div class="container__contenido" > -->
-            <section class="container__informaciones">
-    
-                <form id="encryptionForm">
-                    <textarea id="mensaje" placeholder="Ingrese el texto aquí" id="mensaje" rows="4" cols="50"></textarea><br>
-                    <span id="error-message" style="color: red; display: none;">Por favor, ingresa solo letras
-                        minúsculas y espacios.</span><br><br>
-                    
-                </form>
-                <div class="container__botones">
-                    <button class="boton darkButton" type="button" id="encryptButton" >Cifrar</button>
-                    <button class="boton lightButton" type="button" id="decryptButton">Descifrar</button>
-                </div>
-            </section>
-        <!-- </div> -->
-            
+            <form id="encryptionForm">
+                <textarea id="mensaje" placeholder="Ingrese el texto aquí" id="mensaje" rows="4"
+                    cols="50"></textarea><br>
+                <span id="error-message" style="color: red; display: none;">Por favor, ingresa solo letras
+                    minúsculas y espacios.</span><br><br>
+
+            </form>
+            <div class="container__botones">
+                <button class="boton darkButton" type="button" id="encryptButton">Cifrar</button>
+                <button class="boton lightButton" type="button" id="decryptButton">Descifrar</button>
+            </div>
+        </section>
+
         <section class="campo__visualizacion" id="campo__visualizacion">
             <div class="mensajeInformativo" id="mensajeInformativo">
-                <img id="mensajeInformativo" src="./assets/muneco.svg" alt="dibujo animado con una lupa en la mano derecha" class="dibujo" />      
+                <img src="./assets/muneco.svg"
+                    alt="dibujo animado con una lupa en la mano derecha" class="dibujo" />
 
-            
+
                 <h2>Ningún mensaje fue encontrado </h2>
                 <p>Ingresa el texto que deseas encriptar o desencriptar</p>
-                
-             </div>
-                <button class="boton hidden lightButton" type="button" id="copyButton" >Copiar</button>
-             
-             <div class="mensajeResultado hidden" id="mensajeResultado">
+
+            </div>
+            <button class="boton hidden lightButton" type="button" id="copyButton">Copiar</button>
+
+            <div class="mensajeResultado hidden" id="mensajeResultado">
                 <h2>Mensaje encriptado:</h2>
-                <p id="encryptedMessage"></p>                
+                <p id="encryptedMessage"></p>
             </div>
             <div id="notification" class="notification hidden">
                 Texto copiado
             </div>
         </section>
-    </div>
+        </div>
 
 
-</main>
+    </main>
 
     <script src="app.js"></script>
 
